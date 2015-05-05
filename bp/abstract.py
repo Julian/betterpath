@@ -19,7 +19,7 @@ class IFilePath(Interface):
     File path object.
 
     A file path represents a location for a file-like-object and can be
-    organized into a hierarchy; a file path can can children which are
+    organized into a hierarchy; a file path can have children which are
     themselves file paths.
 
     A file path has a name which uniquely identifies it in the context of its
