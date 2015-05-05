@@ -50,8 +50,13 @@ class MemoryPathTestCase(AbstractFilePathTestCase):
         self.assertTrue(self.path.isdir())
         self.assertTrue(self.path.exists())
 
+        foo = self.path.child("foo")
+        baz = self.path.descendant(["bar", "baz"])
+
         self.path.remove()
         self.assertFalse(self.path.exists())
+        self.assertFalse(foo.exists())
+        self.assertFalse(baz.exists())
 
     def test_removeFile(self):
         """
