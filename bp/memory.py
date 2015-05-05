@@ -148,6 +148,12 @@ class MemoryPath(object):
     def setContent(self, content, ext=b".new"):
         self._fs._store[self._path] = content
 
+    def remove(self):
+        if self.isdir():
+            self._fs._dirs.remove(self._path)
+        else:
+            del self._fs._store[self._path]
+
     # IFilePath stat and other queries
 
     def changed(self):

@@ -138,6 +138,17 @@ class IFilePath(Interface):
         @type ext: L{bytes}
         """
 
+    def remove():
+        """
+        Remove the file or directory at this path.
+
+        If C{self.path} is a directory, recursively remove all its
+        children before removing the directory. If it's a file or link,
+        just delete it.
+
+        @raise Exception: If the file or directory does not already exist
+        """
+
     # Stat and other queries
 
     def changed():

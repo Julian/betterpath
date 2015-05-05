@@ -296,6 +296,9 @@ class ISOPath(object):
     def setContent(self, content, ext=b".new"):
         raise Exception("ISOs are read-only")
 
+    def remove(self):
+        raise Exception("ISOs are read-only")
+
     # IFilePath stat and other queries
 
     def changed(self):

@@ -41,3 +41,38 @@ class MemoryPathTestCase(AbstractFilePathTestCase):
         self.root = self.path
         self.all = self.fs._dirs | set(self.fs._store.keys())
         self.all = set(format_memory_path(p, "/") for p in self.all)
+
+    def test_removeDirectory(self):
+        """
+        L{MemoryPath.remove} on a L{MemoryPath} that refers to a
+        directory will recursively delete its contents.
+        """
+        self.assertTrue(self.path.isdir())
+        self.assertTrue(self.path.exists())
+
+        self.path.remove()
+        self.assertFalse(self.path.exists())
+
+    def test_removeFile(self):
+        """
+        L{MemoryPath.remove} on a L{MemoryPath} that refers to a
+        file simply deletes the file.
+        """
+        path = self.path.child("file")
+        path.setContent("Hello!")
+        self.assertTrue(path.isfile())
+        self.assertTrue(path.exists())
+
+        path.remove()
+        self.assertFalse(path.exists())
+
+    def test_removeNonExistant(self):
+        """
+        L{MemoryPath.remove} on a L{MemoryPath} that does not exist
+        raises an error.
+        """
+        path = self.path.child("file")
+        self.assertFalse(path.exists())
+
+        with self.assertRaises(Exception):
+            path.remove()

@@ -130,6 +130,9 @@ class ZipPath(object):
     def setContent(self, content, ext=b'.new'):
         self.archive.zipfile.writestr(self.pathInArchive, content)
 
+    def remove(self):
+        raise Exception("Zip files do not support in-place removal.")
+
     # IFilePath stat and other queries
 
     def exists(self):

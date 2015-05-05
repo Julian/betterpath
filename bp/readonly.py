@@ -83,6 +83,9 @@ class ReadOnlyPath(object):
     def setContent(self, content, ext=b'.new'):
         raise Exception("Path is read-only")
 
+    def remove(self):
+        raise Exception("Path is read-only")
+
     # IFilePath stat and other queries
 
     def changed(self):
