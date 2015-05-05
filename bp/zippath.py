@@ -29,7 +29,7 @@ from zipfile import ZipFile
 from zope.interface import implementer
 
 from bp.abstract import IFilePath
-from bp.errors import UnlistableError
+from bp.errors import PathError, UnlistableError
 from bp.filepath import FilePath
 from bp.generic import (genericChildren, genericDescendant, genericParents,
                         genericSegmentsFrom, genericSibling, genericWalk)
@@ -131,7 +131,7 @@ class ZipPath(object):
         self.archive.zipfile.writestr(self.pathInArchive, content)
 
     def remove(self):
-        raise Exception("Zip files do not support in-place removal.")
+        raise PathError("Zip files do not support in-place removal.")
 
     # IFilePath stat and other queries
 

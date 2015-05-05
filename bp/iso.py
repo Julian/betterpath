@@ -20,7 +20,7 @@ from struct import unpack
 from zope.interface import implementer
 
 from bp.abstract import IFilePath
-from bp.errors import UnlistableError
+from bp.errors import PathError, UnlistableError
 from bp.generic import (genericChildren, genericParents, genericSegmentsFrom,
                         genericSibling, genericWalk)
 from bp.util import modeIsWriting
@@ -297,7 +297,7 @@ class ISOPath(object):
         raise Exception("ISOs are read-only")
 
     def remove(self):
-        raise Exception("ISOs are read-only")
+        raise PathError("ISOs are read-only")
 
     # IFilePath stat and other queries
 

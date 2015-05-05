@@ -23,3 +23,6 @@ class UnlistableError(Exception):
     An exception which is used to distinguish between errors which mean 'this
     is not a directory you can list' and other, more catastrophic errors.
     """
+
+
+PathError = IOError

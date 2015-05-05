@@ -11,6 +11,7 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
+from bp.errors import PathError
 from bp.memory import MemoryFS, MemoryPath, format_memory_path
 from bp.tests.test_paths import AbstractFilePathTestCase
 
@@ -81,5 +82,5 @@ class MemoryPathTestCase(AbstractFilePathTestCase):
         path = self.path.child("file")
         self.assertFalse(path.exists())
 
-        with self.assertRaises(Exception):
+        with self.assertRaises(PathError):
             path.remove()

@@ -14,6 +14,7 @@
 from zope.interface import implementer
 
 from bp.abstract import IFilePath
+from bp.errors import PathError
 from bp.generic import (genericChildren, genericDescendant, genericParents,
                         genericSegmentsFrom, genericSibling, genericWalk)
 from bp.util import modeIsWriting
@@ -84,7 +85,7 @@ class ReadOnlyPath(object):
         raise Exception("Path is read-only")
 
     def remove(self):
-        raise Exception("Path is read-only")
+        raise PathError("Path is read-only")
 
     # IFilePath stat and other queries
 

@@ -146,7 +146,7 @@ class IFilePath(Interface):
         children before removing the directory. If it's a file or link,
         just delete it.
 
-        @raise Exception: If the file or directory does not already exist
+        @raise PathError: If the file or directory does not already exist
         """
 
     # Stat and other queries

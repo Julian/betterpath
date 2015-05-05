@@ -17,7 +17,7 @@ from StringIO import StringIO
 from zope.interface import implementer
 
 from bp.abstract import IFilePath
-from bp.errors import UnlistableError
+from bp.errors import PathError, UnlistableError
 from bp.generic import (genericChildren, genericParents, genericSegmentsFrom,
                         genericSibling, genericWalk)
 
@@ -154,7 +154,10 @@ class MemoryPath(object):
                 child.remove()
             self._fs._dirs.remove(self._path)
         else:
-            del self._fs._store[self._path]
+            try:
+                del self._fs._store[self._path]
+            except KeyError:
+                raise PathError(self._path)
 
     # IFilePath stat and other queries
 
