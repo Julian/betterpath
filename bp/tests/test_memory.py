@@ -51,7 +51,9 @@ class MemoryPathTestCase(AbstractFilePathTestCase):
         self.assertTrue(self.path.exists())
 
         foo = self.path.child("foo")
+        foo.setContent("Hi!")
         baz = self.path.descendant(["bar", "baz"])
+        baz.setContent("Bye!")
 
         self.path.remove()
         self.assertFalse(self.path.exists())

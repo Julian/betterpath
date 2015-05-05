@@ -150,6 +150,8 @@ class MemoryPath(object):
 
     def remove(self):
         if self.isdir():
+            for child in self.children():
+                child.remove()
             self._fs._dirs.remove(self._path)
         else:
             del self._fs._store[self._path]
