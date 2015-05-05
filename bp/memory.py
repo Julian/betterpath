@@ -11,6 +11,7 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
+from errno import ENOENT
 from itertools import chain
 from StringIO import StringIO
 
@@ -157,7 +158,7 @@ class MemoryPath(object):
             try:
                 del self._fs._store[self._path]
             except KeyError:
-                raise PathError(self._path)
+                raise PathError(ENOENT, self._path)
 
     # IFilePath stat and other queries
 
