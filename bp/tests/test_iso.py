@@ -48,7 +48,7 @@ class ISOPathTestCase(AbstractFilePathTestCase):
 
     def setUp(self):
         fs = MemoryFS()
-        fp = MemoryPath(fs).child("test.iso")
+        fp = MemoryPath(fs=fs).child("test.iso")
         fp.setContent(iso)
 
         AbstractFilePathTestCase.setUp(self)

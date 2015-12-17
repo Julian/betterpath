@@ -15,6 +15,7 @@ from errno import ENOENT
 from itertools import chain
 from StringIO import StringIO
 
+from characteristic import Attribute, attributes, with_repr
 from zope.interface import implementer
 
 from bp.abstract import IFilePath
@@ -71,26 +72,19 @@ def format_memory_path(path, sep):
 
 
 @implementer(IFilePath)
+@attributes(
+    [
+        Attribute(name="_fs"),
+        Attribute(name="_path", default_value=(), exclude_from_repr=True),
+        Attribute(name="path", exclude_from_init=True),
+    ],
+)
 class MemoryPath(object):
     """
     An IFilePath which shows a view into a MemoryFS.
     """
 
     sep = "/"
-
-    def __init__(self, fs, path=()):
-        """
-        Create a new path in memory.
-        """
-
-        self._fs = fs
-        self._path = path
-
-    def __eq__(self, other):
-        return self._fs == other._fs and self._path == other._path
-
-    def __hash__(self):
-        return hash((MemoryPath, self._fs, self._path))
 
     @property
     def path(self):
@@ -125,15 +119,15 @@ class MemoryPath(object):
 
     def parent(self):
         if self._path:
-            return MemoryPath(self._fs, self._path[:-1])
+            return MemoryPath(fs=self._fs, path=self._path[:-1])
         else:
             return self
 
     def child(self, name):
-        return MemoryPath(self._fs, self._path + (name,))
+        return MemoryPath(fs=self._fs, path=self._path + (name,))
 
     def descendant(self, segments):
-        return MemoryPath(self._fs, self._path + tuple(segments))
+        return MemoryPath(fs=self._fs, path=self._path + tuple(segments))
 
     # IFilePath writing and reading
 

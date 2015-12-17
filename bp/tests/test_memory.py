@@ -40,7 +40,7 @@ class MemoryPathTestCase(AbstractFilePathTestCase):
 
         AbstractFilePathTestCase.setUp(self)
 
-        self.path = MemoryPath(self.fs)
+        self.path = MemoryPath(fs=self.fs)
         self.root = self.path
         self.all = self.fs._dirs | set(self.fs._store.keys())
         self.all = set(format_memory_path(p, "/") for p in self.all)
