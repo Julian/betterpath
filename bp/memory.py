@@ -74,7 +74,7 @@ def format_memory_path(path, sep):
 @implementer(IFilePath)
 @attributes(
     [
-        Attribute(name="_fs"),
+        Attribute(name="_fs", exclude_from_repr=True),
         Attribute(name="_path", default_value=(), exclude_from_repr=True),
         Attribute(name="path", exclude_from_init=True),
     ],
