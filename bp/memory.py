@@ -11,7 +11,7 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-from errno import ENOENT
+from errno import EEXIST, ENOENT
 from itertools import chain
 from StringIO import StringIO
 
@@ -135,6 +135,8 @@ class MemoryPath(object):
         return self._fs.open(self._path)
 
     def createDirectory(self):
+        if self._path in self._fs._store:
+            raise PathError(EEXIST, self._path)
         self._fs._dirs.add(self._path)
 
     def getContent(self):
