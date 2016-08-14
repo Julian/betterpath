@@ -14,6 +14,8 @@
 from errno import EEXIST, ENOENT
 from itertools import chain
 from StringIO import StringIO
+import os
+import stat
 
 from characteristic import Attribute, attributes, with_repr
 from zope.interface import implementer
@@ -57,6 +59,7 @@ class MemoryFS(object):
     def __init__(self):
         self._store = {}
         self._dirs = set()
+        self._uids = {}
 
     def open(self, path):
         if path in self._dirs:
@@ -65,6 +68,15 @@ class MemoryFS(object):
             return MemoryFile(self._store, path, self._store[path])
         else:
             return MemoryFile(self._store, path)
+
+    def chown(self, path, uid=None, gid=None):
+        # TODO: gid
+        self._uids[path] = uid
+
+    def stat(self, path):
+        result = [0] * 10
+        result[stat.ST_UID] = self._uids.get(path, os.getuid())
+        return os.stat_result(result)
 
 
 def format_memory_path(path, sep):
@@ -187,6 +199,9 @@ class MemoryPath(object):
 
     def getStatusChangeTime(self):
         return 0.0
+
+    def getUserID(self):
+        return self._fs.stat(self).st_uid
 
     def getAccessTime(self):
         return 0.0

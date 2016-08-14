@@ -12,6 +12,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 import errno
+import os
 
 from bp.errors import PathError
 from bp.memory import MemoryFS, MemoryPath, format_memory_path
@@ -87,3 +88,16 @@ class MemoryPathTestCase(AbstractFilePathTestCase):
         with self.assertRaises(PathError) as e:
             path.remove()
         self.assertEqual(e.exception.errno, errno.ENOENT)
+
+    def test_getUserID(self):
+        """
+        L{MemoryPath.getUserID} on a L{MemoryPath} returns the current user's
+        ID by default.
+
+        """
+
+        self.assertEqual(self.path.getUserID(), os.getuid())
+
+    def test_getUserID_after_set(self):
+        self.fs.chown(self.path, uid=1234, gid=-1)
+        self.assertEqual(self.path.getUserID(), 1234)
