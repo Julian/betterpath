@@ -152,7 +152,10 @@ class MemoryPath(object):
         self._fs._dirs.add(self._path)
 
     def getContent(self):
-        return self._fs._store[self._path]
+        try:
+            return self._fs._store[self._path]
+        except KeyError:
+            raise PathError(ENOENT, self._path)
 
     def setContent(self, content, ext=b".new"):
         self._fs._store[self._path] = content
