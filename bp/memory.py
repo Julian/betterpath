@@ -110,7 +110,7 @@ class MemoryPath(object):
         if self._path not in self._fs._dirs:
             raise UnlistableError()
 
-        i = chain(self._fs._dirs, self._fs._store.iterkeys())
+        i = chain(self._fs._dirs, self._fs._store.keys())
 
         # Linear-time search. Could be better.
         p = self._path
