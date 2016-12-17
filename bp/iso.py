@@ -14,7 +14,7 @@
 from calendar import timegm
 from collections import namedtuple
 from datetime import datetime
-from StringIO import StringIO
+from io import StringIO
 from struct import unpack
 
 from zope.interface import implementer
