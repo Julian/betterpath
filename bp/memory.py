@@ -213,3 +213,6 @@ class MemoryPath(object):
 
     def realpath(self):
         return self
+
+    def dirname(self):
+        return self.parent().path
