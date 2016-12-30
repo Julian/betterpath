@@ -60,6 +60,7 @@ class MemoryFS(object):
         self._store = {}
         self._dirs = set()
         self._uids = {}
+        self._links = {}
 
     def open(self, path):
         if path in self._dirs:
@@ -183,7 +184,7 @@ class MemoryPath(object):
         return self._path in self._fs._store
 
     def islink(self):
-        return False
+        return self in self._fs._links
 
     def exists(self):
         return self.isdir() or self.isfile()
@@ -212,7 +213,10 @@ class MemoryPath(object):
     # IFilePath symlinks
 
     def realpath(self):
-        return self
+        return self._fs._links.get(self, self).path
 
     def dirname(self):
         return self.parent().path
+
+    def linkTo(self, linkFilePath):
+        self._fs._links[linkFilePath] = self
