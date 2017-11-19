@@ -227,7 +227,7 @@ class FilePath(object):
     statinfo = None
     path = None
 
-    sep = slash.encode("ascii")
+    sep = slash
 
     children = genericChildren
     descendant = genericDescendant
