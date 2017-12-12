@@ -12,7 +12,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 from errno import EEXIST, ENOENT
-from io import StringIO
+from io import BytesIO
 from itertools import chain
 import os
 import stat
@@ -29,13 +29,13 @@ DIR = object()
 FILE = object()
 
 
-class MemoryFile(StringIO):
+class MemoryFile(BytesIO):
     """
     A file-like object that saves itself to an external mapping when closed.
     """
 
     def __init__(self, store, key, buf=""):
-        StringIO.__init__(self, buf)
+        BytesIO.__init__(self, buf)
         self._target = store, key
 
     def __enter__(self):
@@ -48,7 +48,7 @@ class MemoryFile(StringIO):
         buf = self.getvalue()
         store, key = self._target
         store[key] = buf
-        StringIO.close(self)
+        BytesIO.close(self)
 
 
 class MemoryFS(object):
