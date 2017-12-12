@@ -62,6 +62,11 @@ class MemoryFS(object):
         self._uids = {}
         self._links = {}
 
+    def create(self, path):
+        if path in self._dirs or path in self._store:
+            raise PathError("{0} already exists.".format(path))
+        return MemoryFile(self._store, path)
+
     def open(self, path):
         if path in self._dirs:
             raise Exception("Directories cannot be opened")
@@ -143,6 +148,9 @@ class MemoryPath(object):
         return MemoryPath(fs=self._fs, path=self._path + tuple(segments))
 
     # IFilePath writing and reading
+
+    def create(self):
+        return self._fs.create(self._path)
 
     def open(self, mode="r"):
         return self._fs.open(self._path)
