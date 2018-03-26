@@ -164,6 +164,8 @@ class MemoryPath(object):
             raise PathError(ENOENT, self._path)
 
     def setContent(self, content, ext=b".new"):
+        if not self.parent().exists():
+            raise PathError(ENOENT, self._path)
         self._fs._store[self._path] = content
 
     def remove(self):

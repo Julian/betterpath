@@ -112,6 +112,13 @@ class AbstractFilePathTestCase(BytesTestCase):
             self.path.child(b"a").child(b"b").child(b"c").segmentsFrom,
             self.path.child(b"d").child(b"c").child(b"e"))
 
+    def test_setContentNonExistingDirectory(self):
+        nonexistent = self.path.descendant([b'nonexistent', b'file'])
+        e = self.assertRaises(
+            (OSError, IOError), nonexistent.setContent, b'stuff',
+        )
+        self.assertEqual(e.errno, errno.ENOENT)
+
     def test_walk(self):
         """
         Verify that walking the path gives the same result as the known file
