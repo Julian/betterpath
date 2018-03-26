@@ -17,8 +17,8 @@ from itertools import chain
 import os
 import stat
 
-from characteristic import Attribute, attributes, with_repr
 from zope.interface import implementer
+import attr
 
 from bp.abstract import IFilePath
 from bp.errors import PathError, UnlistableError
@@ -90,17 +90,15 @@ def format_memory_path(path, sep):
 
 
 @implementer(IFilePath)
-@attributes(
-    [
-        Attribute(name="_fs", exclude_from_repr=True),
-        Attribute(name="_path", default_value=(), exclude_from_repr=True),
-        Attribute(name="path", exclude_from_init=True),
-    ],
-)
+@attr.s(hash=True)
 class MemoryPath(object):
     """
     An IFilePath which shows a view into a MemoryFS.
     """
+
+    _fs = attr.ib(repr=False)
+    _path = attr.ib(default=(), repr=False)
+    path = attr.ib(init=False)
 
     sep = "/"
 
