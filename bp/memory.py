@@ -97,8 +97,7 @@ class MemoryPath(object):
     """
 
     _fs = attr.ib(repr=False)
-    _path = attr.ib(default=(), repr=False)
-    path = attr.ib(init=False)
+    _path = attr.ib(default=())
 
     sep = "/"
 
