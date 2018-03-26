@@ -56,7 +56,10 @@ class MemoryPathTestCase(AbstractFilePathTestCase):
 
         foo = self.path.child("foo")
         foo.setContent("Hi!")
-        baz = self.path.descendant(["bar", "baz"])
+
+        bar = self.path.child("bar")
+        bar.createDirectory()
+        baz = bar.child("baz")
         baz.setContent("Bye!")
 
         self.path.remove()
